@@ -1,15 +1,13 @@
 import React from 'react';
 
-export default function IconButton({ icon: Icon, label, onClick }) {
+export default function IconButton({ img, label, onClick }) {
   return (
     <button
       onClick={onClick}
-      className="flex flex-col items-center justify-center w-20 aspect-square p-3 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 hover:bg-white/20 transition"
+      className="aspect-square flex flex-col items-center justify-center p-4 bg-white/0 backdrop-blur-xl border border-white/0 rounded-xl hover:bg-white/10 transition-all"
     >
-      <Icon className="w-8 h-8 mb-1 text-white" />
-      <span className="text-xs text-white font-montserrat">{label}</span>
+      <img src={img} alt={label} className="w-16 h-16 object-contain" />
+      <span className="mt-2 text-sm">{label}</span>
     </button>
   );
 }
-
-
