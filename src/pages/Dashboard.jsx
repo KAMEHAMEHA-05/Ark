@@ -12,6 +12,18 @@ export default function Dashboard() {
     { icon: LucideBarChart2, label: 'Resources' },
     { icon: LucideShield, label: 'Security' },
     { icon: LucideStickyNote, label: 'Notes' },
+    { icon: LucideFile, label: 'Files' },
+    { icon: LucideNotebook, label: 'Jupyter' },
+    { icon: LucideTerminal, label: 'Terminal' },
+    { icon: LucideBarChart2, label: 'Resources' },
+    { icon: LucideShield, label: 'Security' },
+    { icon: LucideStickyNote, label: 'Notes' },
+    { icon: LucideFile, label: 'Files' },
+    { icon: LucideNotebook, label: 'Jupyter' },
+    { icon: LucideTerminal, label: 'Terminal' },
+    { icon: LucideBarChart2, label: 'Resources' },
+    { icon: LucideShield, label: 'Security' },
+    { icon: LucideStickyNote, label: 'Notes' },
     // Add more icons here
   ];
 
@@ -30,15 +42,16 @@ export default function Dashboard() {
         </div>
       </header>
 
-      <main className="w-[100vw] h-[92vh] flex justify-center items-start pt-8">
+      <main className="w-[100vw] h-[65vh] sm:h-[32vh] flex justify-center items-start pt-8">
         <div className="w-[80vw] mx-[10vw] h-full grid 
             grid-cols-3 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-8 xl:grid-cols-10
-            gap-x-2 gap-y-1 sm:gap-x-2 sm:gap-y-1 md:gap-x-4 md:gap-y-1 lg:gap-x-6 lg:gap-y-1">
+            gap-x-2 [row-gap:5vh]">
             {apps.map((app) => (
             <IconButton key={app.label} {...app} onClick={() => openApp(app.label)} />
             ))}
         </div>
       </main>
+
 
       {modal.open && (
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center">
