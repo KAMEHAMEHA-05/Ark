@@ -45,7 +45,7 @@ export default function Dashboard() {
     ? fuse.search(searchQuery).map(result => result.item)
     : combinedApps;
 
-  const API_BASE = "https://zenmaster.coydog-parore.ts.net:5000"; // or Tailscale IP / MagicDNS / Funnel URL
+  const API_BASE = "https://zenmaster.coydog-parore.ts.net"; // or Tailscale IP / MagicDNS / Funnel URL
 
   const openApp = async (label, endpoint) => {
     const finalEndpoint = endpoint ? `${API_BASE}${endpoint}` : `${API_BASE}${DUMMY_ENDPOINT}`;
