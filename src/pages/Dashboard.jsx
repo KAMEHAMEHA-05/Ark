@@ -9,12 +9,12 @@ export default function Dashboard() {
   const DUMMY_ENDPOINT = '/api/dummy';
 
   const mainApps = [
-    { img: '/icons/notes.png', label: 'Notes'},
+    { img: '/icons/notes.png', label: 'Notes' },
     { img: '/icons/files.png', label: 'Files', endpoint: '/api/files' },
-    { img: '/icons/jupyter.png', label: 'Jupyter'},
-    { img: '/icons/terminal.png', label: 'Terminal'},
-    { img: '/icons/resources.png', label: 'Resources'},
-    { img: '/icons/security.png', label: 'Security' }, // No endpoint -> will fallback
+    { img: '/icons/jupyter.png', label: 'Jupyter' },
+    { img: '/icons/terminal.png', label: 'Terminal' },
+    { img: '/icons/resources.png', label: 'Resources' },
+    { img: '/icons/security.png', label: 'Security' },
   ];
 
   const otherApps = [
@@ -45,22 +45,31 @@ export default function Dashboard() {
     ? fuse.search(searchQuery).map(result => result.item)
     : combinedApps;
 
+  const API_BASE = "http://zenmaster:5000"; // or Tailscale IP / MagicDNS / Funnel URL
+
   const openApp = async (label, endpoint) => {
-    const finalEndpoint = endpoint || DUMMY_ENDPOINT;
+    const finalEndpoint = endpoint ? `${API_BASE}${endpoint}` : `${API_BASE}${DUMMY_ENDPOINT}`;
+    
     try {
       const res = await fetch(finalEndpoint);
-      const data = await res.text();
-      setModal({ open: true, title: label, response: data });
+      const data = await res.json();
+
+      if (data.redirect) {
+        window.open(data.redirect, '_blank');
+      } else {
+        setModal({ open: true, title: label, response: data.status || JSON.stringify(data) });
+      }
     } catch (err) {
       setModal({ open: true, title: label, response: 'Error connecting to server.' });
     }
   };
 
+
   return (
     <div className="w-[100vw] h-[100vh] bg-gradient-to-br from-black to-gray-900 text-white font-montserrat overflow-hidden">
 
       <header className="w-[100vw] h-[8vh] px-8 flex items-center justify-between bg-white/10 backdrop-blur-xl border-b border-white/20 relative">
-        <img src="/icons/arklogo.png" alt="Ark Logo" className="h-6"/>
+        <img src="/icons/arklogo.png" alt="Ark Logo" className="h-6" />
         <img src="/icons/ark.png" alt="Center Icon" className="w-20 h-13 absolute left-1/2 transform -translate-x-1/2" />
         <div className="flex gap-4 text-sm"><span>2d 4h</span></div>
       </header>
@@ -77,11 +86,11 @@ export default function Dashboard() {
         {searchQuery ? (
           <div className="w-[80vw] mx-[10vw] h-full grid grid-cols-3 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-8 xl:grid-cols-10 gap-x-2 [row-gap:3vh] overflow-y-auto scrollbar-hide">
             {filteredApps.map((app, index) => (
-              <IconButton 
-                key={app.label + index} 
-                img={app.img} 
-                label={app.label} 
-                onClick={() => openApp(app.label, app.endpoint)} 
+              <IconButton
+                key={app.label + index}
+                img={app.img}
+                label={app.label}
+                onClick={() => openApp(app.label, app.endpoint)}
               />
             ))}
           </div>
@@ -89,22 +98,22 @@ export default function Dashboard() {
           <div className="w-[80vw] mx-[10vw] h-full overflow-y-auto scrollbar-hide flex flex-col items-center">
             <div className="w-full grid grid-cols-3 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-8 xl:grid-cols-10 gap-x-2 [row-gap:3vh]">
               {mainApps.map((app, index) => (
-                <IconButton 
-                  key={app.label + index} 
-                  img={app.img} 
-                  label={app.label} 
-                  onClick={() => openApp(app.label, app.endpoint)} 
+                <IconButton
+                  key={app.label + index}
+                  img={app.img}
+                  label={app.label}
+                  onClick={() => openApp(app.label, app.endpoint)}
                 />
               ))}
             </div>
             <div className="h-[10vh]" />
             <div className="w-full grid grid-cols-3 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-8 xl:grid-cols-10 gap-x-2 [row-gap:3vh]">
               {otherApps.map((app, index) => (
-                <IconButton 
-                  key={app.label + index} 
-                  img={app.img} 
-                  label={app.label} 
-                  onClick={() => openApp(app.label, app.endpoint)} 
+                <IconButton
+                  key={app.label + index}
+                  img={app.img}
+                  label={app.label}
+                  onClick={() => openApp(app.label, app.endpoint)}
                 />
               ))}
             </div>
