@@ -2,6 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Image from '@tiptap/extension-image';
+import { TextStyle } from '@tiptap/extension-text-style';
+import Color from '@tiptap/extension-color';
+import Bold from '@tiptap/extension-bold';
+import Italic from '@tiptap/extension-italic';
+import Underline from '@tiptap/extension-underline';
+import Strike from '@tiptap/extension-strike';
+import CodeBlock from '@tiptap/extension-code-block';
+import Code from '@tiptap/extension-code';
+import './Notes.css'; // Import your CSS styles
 
 export default function Notes() {
   const [notes, setNotes] = useState([]);
@@ -9,8 +18,8 @@ export default function Notes() {
   const [newNoteOpen, setNewNoteOpen] = useState(false);
   const [noteName, setNoteName] = useState('');
 
-  //const API_BASE = "http://localhost:5000";
-  const API_BASE = "https://zenmaster.coydog-parore.ts.net/";
+  const API_BASE = "https://zenmaster.coydog-parore.ts.net";
+  //const API_BASE = "http://localhost:5000"; // Use your backend API base URL
 
   const fetchNotes = async () => {
     const res = await fetch(`${API_BASE}/api/notes`);
@@ -23,7 +32,22 @@ export default function Notes() {
   }, []);
 
   const editor = useEditor({
-    extensions: [StarterKit, Image],
+    extensions: [
+        StarterKit.configure({
+        italic: false, // Disable the default Italic
+        bold: false,   // Disable default Bold to replace it manually (optional)
+        strike: false, // Same for Strike (optional)
+        }),
+        Bold,
+        Italic,
+        Underline,
+        Strike,
+        Code,
+        CodeBlock,
+        TextStyle,
+        Color,
+        Image,
+    ],
     content: '',
   });
 
@@ -64,12 +88,10 @@ export default function Notes() {
 
   const deleteNote = async (noteName) => {
     await fetch(`${API_BASE}/api/notes/${noteName}`, {
-        method: 'DELETE',
+      method: 'DELETE',
     });
-
-    fetchNotes(); // Refresh the list
- };
-
+    fetchNotes();
+  };
 
   return (
     <div className="w-[100vw] h-[100vh] bg-gradient-to-br from-black to-gray-900 text-white font-montserrat overflow-hidden">
@@ -89,20 +111,19 @@ export default function Notes() {
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 pb-20">
           {notes.map((note, index) => (
             <div
-                key={index}
-                onClick={() => openNote(note)}
-                onContextMenu={(e) => {
+              key={index}
+              onClick={() => openNote(note)}
+              onContextMenu={(e) => {
                 e.preventDefault();
                 if (window.confirm(`Delete note "${note.name.replace('.html', '')}"?`)) {
-                    deleteNote(note.name);
+                  deleteNote(note.name);
                 }
-                }}
-                className="bg-white/10 hover:bg-white/20 cursor-pointer p-4 rounded-xl border border-white/20 flex items-center justify-center text-center break-words text-sm sm:text-base"
+              }}
+              className="bg-white/10 hover:bg-white/20 cursor-pointer p-4 rounded-xl border border-white/20 flex items-center justify-center text-center break-words text-sm sm:text-base"
             >
-                {note.name.replace('.html', '')}
+              {note.name.replace('.html', '')}
             </div>
           ))}
-
         </div>
 
         {/* Floating + Button */}
@@ -126,6 +147,28 @@ export default function Notes() {
             placeholder="Note Title"
             className="w-full text-3xl mb-4 bg-transparent text-white placeholder-white/50 outline-none"
           />
+
+          {/* Formatting Toolbar */}
+          <div className="flex flex-wrap gap-2 mb-4">
+            <button onClick={() => editor.chain().focus().toggleBold().run()} className={`px-3 py-1 rounded ${editor.isActive('bold') ? 'bg-white/30' : 'bg-white/10'}`}>B</button>
+            <button onClick={() => editor.chain().focus().toggleItalic().run()} className={`px-3 py-1 rounded ${editor.isActive('italic') ? 'bg-white/30' : 'bg-white/10'}`}>I</button>
+            <button onClick={() => editor.chain().focus().toggleUnderline().run()} className={`px-3 py-1 rounded ${editor.isActive('underline') ? 'bg-white/30' : 'bg-white/10'}`}>U</button>
+            <button onClick={() => editor.chain().focus().toggleStrike().run()} className={`px-3 py-1 rounded ${editor.isActive('strike') ? 'bg-white/30' : 'bg-white/10'}`}>S</button>
+            
+            {/* Inline Code */}
+            <button onClick={() => editor.chain().focus().toggleCode().run()} className={`px-3 py-1 rounded ${editor.isActive('code') ? 'bg-white/30' : 'bg-white/10'}`}>`</button>
+
+            {/* Block Code */}
+            <button onClick={() => editor.chain().focus().toggleCodeBlock().run()} className={`px-3 py-1 rounded ${editor.isActive('codeBlock') ? 'bg-white/30' : 'bg-white/10'}`}>[Code Block]</button>
+
+            {/* Color Picker */}
+            <input
+                type="color"
+                onChange={(e) => editor.chain().focus().setColor(e.target.value).run()}
+                className="w-10 h-10 p-0 border-none bg-transparent cursor-pointer"
+            />
+          </div>
+
 
           <div className="w-full flex-grow overflow-y-scroll border border-white/20 rounded-xl p-4">
             <EditorContent editor={editor} />
