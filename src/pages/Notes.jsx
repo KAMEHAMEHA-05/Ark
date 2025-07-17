@@ -106,7 +106,7 @@ export default function Notes() {
       {/* Notes Grid */}
       <main className="w-[100vw] h-[92vh] flex flex-col pt-8 overflow-y-auto scrollbar-hide px-6 sm:px-10">
 
-        <h1 className="text-3xl font-bold mb-6">Notes</h1>
+        <h1 className="text-3xl mb-6" style={{ fontFamily: 'Michroma, sans-serif' }}>NOTES</h1>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 pb-20">
           {notes.map((note, index) => (

@@ -9,7 +9,7 @@ export default function Dashboard() {
   const DUMMY_ENDPOINT = '/api/dummy';
 
   const mainApps = [
-    { img: '/icons/notes.png', label: 'Notes' },
+    { img: '/icons/notes.png', label: 'Notes', endpoint: '/api/notes' },
     { img: '/icons/files.png', label: 'Files', endpoint: '/api/files' },
     { img: '/icons/jupyter.png', label: 'Jupyter' },
     { img: '/icons/terminal.png', label: 'Terminal' },
@@ -51,6 +51,10 @@ export default function Dashboard() {
   const openApp = async (label, endpoint) => {
     if (label === 'Notes') {
       window.open('/notes', '_blank'); // Opens Notes page in new tab
+      return;
+    }
+    if (label === 'Terminal') {
+      window.open('/terminal', '_blank'); // Opens Notes page in new tab
       return;
     }
     const finalEndpoint = endpoint ? `${API_BASE}${endpoint}` : `${API_BASE}${DUMMY_ENDPOINT}`;
