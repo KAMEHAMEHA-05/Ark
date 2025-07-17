@@ -8,7 +8,7 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       devOptions: {
-        enabled: true,      // <<< THIS enables manifest in dev
+        enabled: true,
         type: 'module'
       },
       manifest: {
@@ -30,14 +30,19 @@ export default defineConfig({
             type: 'image/png'
           }
         ]
+      },
+      workbox: {
+        navigateFallback: '/index.html',
+        navigateFallbackAllowlist: [
+          /^\/$/, 
+          /^\/files\//, 
+          /^\/api\//,
+          /^\/notes\//   // Add other routes you proxy too
+        ]
       }
     })
   ],
   server: {
-    // https: {
-    // key: './zenmaster-key.pem',
-    // cert: './zenmaster.pem'
-    // },
     host: true,
     port: 5173,
     strictPort: true,

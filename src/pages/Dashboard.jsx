@@ -45,9 +45,14 @@ export default function Dashboard() {
     ? fuse.search(searchQuery).map(result => result.item)
     : combinedApps;
 
-  const API_BASE = "https://zenmaster.coydog-parore.ts.net"; // or Tailscale IP / MagicDNS / Funnel URL /
+  //const API_BASE = "http://localhost:5000"; // or Tailscale IP / MagicDNS / Funnel URL /
+  const API_BASE = "https://zenmaster.coydog-parore.ts.net/";
 
   const openApp = async (label, endpoint) => {
+    if (label === 'Notes') {
+      window.open('/notes', '_blank'); // Opens Notes page in new tab
+      return;
+    }
     const finalEndpoint = endpoint ? `${API_BASE}${endpoint}` : `${API_BASE}${DUMMY_ENDPOINT}`;
     
     try {
