@@ -1,13 +1,20 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../AuthContext';
 
-export default function Login({ setIsLoggedIn }) {
+export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  
+  const { login } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
+  // Where to go after login
+  const from = location.state?.from?.pathname || '/';
+
+  //const API_BASE = "http://localhost:5000";
   const API_BASE = "https://zenmaster.coydog-parore.ts.net";
-  //const API_BASE = "http://localhost:5000"; // Use your backend API base URL
 
   const handleLogin = async () => {
     const res = await fetch(API_BASE.concat('/api/login'), {
@@ -17,13 +24,12 @@ export default function Login({ setIsLoggedIn }) {
     });
 
     if (res.ok) {
-      setIsLoggedIn(true);
-      navigate('/');
+      login();
+      navigate(from, { replace: true }); // Redirect back to intended page
     } else {
       alert('Invalid credentials');
     }
   };
-
 
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center bg-gradient-to-br from-black to-gray-900 text-white">
