@@ -5,6 +5,7 @@ import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Notes from './pages/Notes';
 import WebTerminal from './pages/Terminal';
+import Resources from './pages/Resources';
 
 function PrivateRoute({ element }) {
   const { isLoggedIn } = useAuth();
@@ -26,6 +27,7 @@ export default function App() {
           <Route path="/" element={<PrivateRoute element={<Dashboard />} />} />
           <Route path="/notes" element={<PrivateRoute element={<Notes />} />} />
           <Route path="/terminal" element={<PrivateRoute element={<WebTerminal />} />} />
+          <Route path="/resources" element={<PrivateRoute element={<Resources />} />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

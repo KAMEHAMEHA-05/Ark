@@ -57,6 +57,10 @@ export default function Dashboard() {
       window.open('/terminal', '_blank'); // Opens Notes page in new tab
       return;
     }
+    if (label === 'Resources') {
+      window.open('/resources', '_blank'); // Opens Notes page in new tab
+      return;
+    }
     const finalEndpoint = endpoint ? `${API_BASE}${endpoint}` : `${API_BASE}${DUMMY_ENDPOINT}`;
     
     try {
