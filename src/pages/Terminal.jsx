@@ -86,7 +86,7 @@ export default function WebTerminal() {
 
       <h1 className="text-3xl mb-6 ml-6 mt-8" style={{ fontFamily: 'Michroma, sans-serif' }}>ARK TERMINAL</h1>
       {/* Terminal Content */}
-      <main className="w-full h-[92vh] flex items-center justify-center p-4">
+      <main className="w-full h-[80vh] flex items-center justify-center p-4">
         <div ref={terminalRef} className="w-full h-full rounded-xl border border-white/20 overflow-hidden" />
       </main>
 
