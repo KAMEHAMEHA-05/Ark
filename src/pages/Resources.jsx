@@ -64,7 +64,26 @@ export default function Resources() {
     socket.disconnect();
   };
 
-  if (!stats) return <div className="text-white p-8">Loading...</div>;
+ if (!stats) {
+    return (
+      <div className="w-[100vw] h-[100vh] bg-gradient-to-br from-black to-gray-900 text-white font-montserrat overflow-x-hidden overflow-y-auto scrollbar-hide">
+        <header className="w-[100vw] h-[8vh] px-8 flex items-center justify-between bg-white/10 backdrop-blur-xl border-b border-white/20 relative">
+          <img src="/icons/arklogo.png" alt="Ark Logo" className="h-6" />
+          <img src="/icons/ark.png" alt="Center Icon" className="w-20 h-13 absolute left-1/2 transform -translate-x-1/2" />
+          <div className="flex gap-4 text-sm"><span>2d 4h</span></div>
+        </header>
+
+        <main className="p-8 w-full h-full flex items-center justify-center">
+          <img 
+            src="/icons/loading.gif" 
+            alt="Loading..." 
+            className="w-24 h-24" 
+          />
+        </main>
+      </div>
+    );
+  }
+
 
   const filteredProcesses = stats.processes.filter(proc =>
     proc.name.toLowerCase().includes(search.toLowerCase())
