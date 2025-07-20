@@ -34,7 +34,16 @@ export default function Login() {
 
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center bg-gradient-to-br from-black to-gray-900 text-white">
-      <h1 className="text-4xl mb-8">Ark Login</h1>
+      
+      <div className="flex flex-col items-center mb-8">
+        
+        <img 
+          src="/icons/ark.png" 
+          alt="Logo 2" 
+          style={{ maxWidth: '150px', height: 'auto' }} 
+        />
+      </div>
+
 
       <input
         type="text"
@@ -58,4 +67,5 @@ export default function Login() {
       </button>
     </div>
   );
+
 }
