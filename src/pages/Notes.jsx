@@ -18,8 +18,9 @@ export default function Notes() {
   const [newNoteOpen, setNewNoteOpen] = useState(false);
   const [noteName, setNoteName] = useState('');
 
-  const API_BASE = "https://zenmaster.coydog-parore.ts.net";
+  //const API_BASE = "https://zenmaster.coydog-parore.ts.net";
   //const API_BASE = "http://localhost:5000"; // Use your backend API base URL
+  const API_BASE = import.meta.env.VITE_API_BASE;
 
   const fetchNotes = async () => {
     const res = await fetch(`${API_BASE}/api/notes`);

@@ -3,7 +3,8 @@ import io from 'socket.io-client';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 
 //const API_BASE = "http://localhost:5000";
-const API_BASE = "https://zenmaster.coydog-parore.ts.net/";
+//const API_BASE = "https://zenmaster.coydog-parore.ts.net/";
+const API_BASE = import.meta.env.VITE_API_BASE;
 
 export default function Resources() {
   const [stats, setStats] = useState(null);

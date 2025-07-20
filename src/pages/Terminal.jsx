@@ -12,7 +12,8 @@ export default function WebTerminal() {
   const inputBuffer = useRef('');
 
   //const API_BASE = "http://localhost:5000"; // or Tailscale IP / MagicDNS / Funnel URL /
-  const API_BASE = "https://zenmaster.coydog-parore.ts.net/";
+  //const API_BASE = "https://zenmaster.coydog-parore.ts.net/";
+  const API_BASE = import.meta.env.VITE_API_BASE;
 
   useEffect(() => {
     socketRef.current = io(API_BASE);

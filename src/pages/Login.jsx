@@ -14,7 +14,8 @@ export default function Login() {
   const from = location.state?.from?.pathname || '/';
 
   //const API_BASE = "http://localhost:5000";
-  const API_BASE = "https://zenmaster.coydog-parore.ts.net";
+  //const API_BASE = "https://zenmaster.coydog-parore.ts.net";
+  const API_BASE = import.meta.env.VITE_API_BASE;
 
   const handleLogin = async () => {
     const res = await fetch(API_BASE.concat('/api/login'), {
