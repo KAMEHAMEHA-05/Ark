@@ -46,8 +46,10 @@ export default function Dashboard() {
     : combinedApps;
 
   //const API_BASE = "http://localhost:5000"; // or Tailscale IP / MagicDNS / Funnel URL /
-  const API_BASE = "https://zenmaster.coydog-parore.ts.net/";
-
+  //const API_BASE = "https://zenmaster.coydog-parore.ts.net/";
+  const API_BASE = import.meta.env.VITE_API_BASE;
+  console.log('API_BASE:', API_BASE);
+  
   const openApp = async (label, endpoint) => {
     if (label === 'Notes') {
       window.open('/notes', '_blank'); // Opens Notes page in new tab
