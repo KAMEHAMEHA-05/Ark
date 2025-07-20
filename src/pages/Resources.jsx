@@ -80,7 +80,19 @@ export default function Resources() {
         <div className="flex gap-4 text-sm"><span>2d 4h</span></div>
       </header>
 
-      <h1 className="text-3xl mb-6 ml-7 mt-6" style={{ fontFamily: 'Michroma, sans-serif' }}>SYSTEM RESOURCES</h1>
+      <div className="flex items-center mb-6 ml-7 mt-6">
+          <a href="/" rel="noopener noreferrer">
+            <img 
+              src="/icons/backbutton.png" 
+              alt="Icon" 
+              className="w-8 h-8 mr-3" 
+              style={{ cursor: 'pointer' }}
+            />
+          </a>
+          <h1 className="text-3xl" style={{ fontFamily: 'Michroma, sans-serif' }}>
+            SYSTEM RESOURCES
+          </h1>
+      </div>
       <div className="p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* CPU */}
         <div className={chartBaseStyle}>

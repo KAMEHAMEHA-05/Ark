@@ -84,7 +84,19 @@ export default function WebTerminal() {
         <div className="flex gap-4 text-sm"><span>Terminal</span></div>
       </header>
 
-      <h1 className="text-3xl mb-6 ml-6 mt-8" style={{ fontFamily: 'Michroma, sans-serif' }}>ARK TERMINAL</h1>
+      <div className="flex items-center mb-6 mt-6 ml-4">
+          <a href="/" rel="noopener noreferrer">
+            <img 
+              src="/icons/backbutton.png" 
+              alt="Icon" 
+              className="w-8 h-8 mr-3" 
+              style={{ cursor: 'pointer' }}
+            />
+          </a>
+          <h1 className="text-3xl" style={{ fontFamily: 'Michroma, sans-serif' }}>
+            ARK TERMINAL
+          </h1>
+      </div>
       {/* Terminal Content */}
       <main className="w-full h-[80vh] flex items-center justify-center p-4">
         <div ref={terminalRef} className="w-full h-full rounded-xl border border-white/20 overflow-hidden" />
