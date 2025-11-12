@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, send_file
 from llm import gemini, gpt
 from notes import note_extract
+import os
 
 app = Flask(__name__)
 
@@ -64,6 +65,24 @@ def download(filename):
         as_attachment=True,         
         download_name='file.txt'     
     )
+
+UPLOAD_FOLDER = './Notes'
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part in request'}), 400
+
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({'error': 'No file selected'}), 400
+
+    # Save the uploaded file
+    save_path = os.path.join(UPLOAD_FOLDER, file.filename)
+    file.save(save_path)
+
+    return jsonify({'message': f'File {file.filename} uploaded successfully to {save_path}'}), 200
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
