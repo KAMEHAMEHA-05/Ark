@@ -1,0 +1,36 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int n;
+vector<vector<int>> cost;
+vector<bool> visited;
+int best = INT_MAX;
+
+void tsp(int curr, int count, int sum, int start) {
+    if (count == n && cost[curr][start]) {
+        best = min(best, sum + cost[curr][start]);
+        return;
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (!visited[i] && cost[curr][i]) {
+            visited[i] = true;
+            tsp(i, count + 1, sum + cost[curr][i], start);
+            visited[i] = false;
+        }
+    }
+}
+
+int main() {
+    cost = {
+        {0, 10, 15, 20},
+        {10, 0, 35, 25},
+        {15, 35, 0, 30},
+        {20, 25, 30, 0}
+    };
+    n = cost.size();
+    visited.assign(n, false);
+    visited[0] = true;
+    tsp(0, 1, 0, 0);
+    cout << "Minimum Cost: " << best;
+}

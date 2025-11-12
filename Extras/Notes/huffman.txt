@@ -1,0 +1,45 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Node {
+    char c;
+    int f;
+    Node *l, *r;
+    Node(char c, int f) : c(c), f(f), l(nullptr), r(nullptr) {}
+};
+
+struct cmp {
+    bool operator()(Node* a, Node* b) {
+        return a->f > b->f;
+    }
+};
+
+void print(Node* root, string s) {
+    if (!root) return;
+    if (root->c != '#') {
+        cout << root->c << ": " << s << "\n";
+    }
+    print(root->l, s + "0");
+    print(root->r, s + "1");
+}
+
+int main() {
+    vector<char> c = {'a','b','c','d','e','f'};
+    vector<int> f = {5,9,12,13,16,45};
+
+    priority_queue<Node*, vector<Node*>, cmp> pq;
+    for (int i = 0; i < c.size(); i++) {
+        pq.push(new Node(c[i], f[i]));
+    }
+
+    while (pq.size() > 1) {
+        Node* l = pq.top(); pq.pop();
+        Node* r = pq.top(); pq.pop();
+        Node* n = new Node('#', l->f + r->f);
+        n->l = l;
+        n->r = r;
+        pq.push(n);
+    }
+
+    print(pq.top(), "");
+}

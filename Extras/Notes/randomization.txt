@@ -1,0 +1,31 @@
+#include <bits/stdc++.h>
+using namespace std;
+int findSet(vector<int>& parent,int x){ return parent[x]==x?x:parent[x]=findSet(parent,parent[x]); }
+int kargerMinCut(int n, vector<pair<int,int>> edges){
+    vector<pair<int,int>> e = edges;
+    random_device rd; mt19937 g(rd());
+    vector<int> parent(n);
+    for(int i=0;i<n;i++) parent[i]=i;
+    int vertices = n;
+    while(vertices>2){
+        uniform_int_distribution<int> dist(0,(int)e.size()-1);
+        int idx = dist(g);
+        int u = findSet(parent,e[idx].first);
+        int v = findSet(parent,e[idx].second);
+        if(u==v) { e.erase(e.begin()+idx ); continue; }
+        parent[v]=u;
+        vertices--;
+        vector<pair<int,int>> ne;
+        for(auto &it:e){
+            int a=findSet(parent,it.first), b=findSet(parent,it.second);
+            if(a!=b) ne.push_back({a,b});
+        }
+        e.swap(ne);
+    }
+    return (int)e.size();
+}
+int main(){
+    int n=4;
+    vector<pair<int,int>> edges = {{0,1},{0,2},{0,3},{1,2},{2,3},{1,3}};
+    cout<<"MinCut approx: "<<kargerMinCut(n,edges)<<"\n";
+}

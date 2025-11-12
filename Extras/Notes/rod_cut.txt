@@ -1,0 +1,31 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int cutRod(vector<int>& price, int n, vector<int>& dp, vector<int>& cut) {
+    if (n == 0) return 0;
+    if (dp[n] != -1) return dp[n];
+
+    int best = INT_MIN;
+    int bestCut = 0;
+    for (int i = 1; i <= n; i++) {
+        int val = price[i - 1] + cutRod(price, n - i, dp, cut);
+        if (val > best) {
+            best = val;
+            bestCut = i;
+        }
+    }
+    cut[n] = bestCut;
+    return dp[n] = best;
+}
+
+int main() {
+    vector<int> price = {1, 5, 8, 9, 10, 17, 17, 20};
+    int n = 8;
+    vector<int> dp(n + 1, -1), cut(n + 1, 0);
+
+    cout << "Maximum Profit: " << cutRod(price, n, dp, cut) << "\nCuts: ";
+    while (n > 0) {
+        cout << cut[n] << " ";
+        n -= cut[n];
+    }
+}
