@@ -1,5 +1,6 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 from llm import gemini, gpt
+from notes import note_extract
 
 app = Flask(__name__)
 
@@ -34,6 +35,35 @@ def query_gpt():
     response = gpt(query)
     # return jsonify({"response": response})
     return response
+
+@app.route('/notes/<file_name>', methods=['GET'])
+def notes(file_name):
+    """
+    Endpoint to retrieve the content of a note file.
+    URL format: /notes/<file_name>
+    """
+    content = note_extract(file_name)
+    if content is None:
+        return jsonify({"error": "File not found"}), 404
+    return (content)
+
+@app.route('/stdcpp', methods=['GET'])
+def download_stdcpp():
+    file_path = './stdc++.h'
+    return send_file(
+        file_path,
+        as_attachment=True,         
+        download_name='file.txt'     
+    )
+
+@app.route('/download_notes/<filename>', methods=['GET'])
+def download(filename):
+    file_path = './Notes/' + filename + '.txt'
+    return send_file(
+        file_path,
+        as_attachment=True,         
+        download_name='file.txt'     
+    )
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
