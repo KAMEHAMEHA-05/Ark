@@ -1,8 +1,9 @@
 from google import genai
 from openai import OpenAI
+from os import getenv
 
-gemini_client = genai.Client(api_key = "AIzaSyBBuvyJRgqGsSVE7Rgaq1zI4zumD3q02qk")
-openai_client = OpenAI(api_key="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")
+gemini_client = genai.Client(api_key = getenv("GEMINI_API_KEY"))
+openai_client = OpenAI(api_key=getenv("OPENAI_API_KEY"))
 
 
 def gemini(meta):
